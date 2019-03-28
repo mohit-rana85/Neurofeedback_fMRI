@@ -1,0 +1,87 @@
+
+FileVersion:                      3
+
+MergeType:                        0
+
+Title:                            "feedback"
+
+ParadigmHelpFile:                 ""
+IFISfMRIAnalysisTests:            tdat
+IFISfMRIAnalysisOptions:          tdat
+
+RawDataBigEndian:                 0
+
+ShowGODlgAfterPreparation:        0
+
+WatchFolder:                      "D:/Feedback/Data/Watch Dir/data/20101109.MP_rtfMRI_test.MP_rtfMRI_test/"
+TargetFolder:                     "D:/Feedback/Data/Target Dir/andrea_test_09112010/"
+
+DataType:                         SIEMENS_DICOM_MOSAIC
+
+FirstFileName:                    "001_000010_000001"
+DicomNameDelimiter:               "_"
+DicomNameExtension:               "dcm"
+DicomFirstVolumeNr:               10
+DicomFirstImageNr:                1
+InplaneFoVX:                      210
+InplaneFoVY:                      210
+SliceThickness:                   5
+GapThickness:                     1
+
+TimeOutSeconds:                   24
+
+MatrixSizeX:                      64
+MatrixSizeY:                      64
+
+MosaicResolutionX:                256
+MosaicResolutionY:                256
+
+NrOfVolumes:                      150
+NrOfVolumesToSkip:                10
+
+NrOfSlices:                       16
+
+SlicePrefix:                      "feedback000010-"
+ProjectName:                      "feedback000010"
+
+TR:                               1500
+InterSliceTime:                   95
+
+ROIColorsFile:                    ""
+
+MultiSliceROISelection:           1
+
+Threshold:                        3
+ClusterSizePixels:                4
+
+NrOfColumns:                      4
+NrOfRows:                         4
+
+ForceTRDelay:                     0
+
+StimulationProtocol:              "./feedback.prt"
+ContrastFile:                     ""
+
+AutoContrastGenerationLevel:      1
+
+DriftConfoundPredictors:          1
+
+MotionCorrection:                 1
+
+SpatialGaussianSmoothing:         0
+SpatialSmoothingFWHM:             0
+
+OverlayInplaneData:               0
+
+FlipSliceOrderInMultiSliceView:   1
+FlipSliceOrderInVolumeView:       1
+
+IntraSessionMotionCorrection:     0
+
+OverlayOnVMRMode:                 1
+FMRVMRAlignVMRPosFile:            "W:/TEST_091110/untitled_VMR.pos"
+IntraSessionVMRFile:              "W:/TEST_091110/untitled.vmr"
+
+OverlayOnSRFMode:                 0
+
+FeedbackTargetFolder:             "./"

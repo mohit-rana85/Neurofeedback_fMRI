@@ -1,0 +1,84 @@
+
+FileVersion:        2
+
+ResolutionOfTime:   Volumes
+
+Experiment:         feedback
+
+BackgroundColor:    0 0 0
+TextColor:          255 255 255
+
+TimeCourseColor:    255 255 255
+TimeCourseThick:    3
+ReferenceFuncColor: 0 0 80
+ReferenceFuncThick: 3
+NrOfImages: 5
+PathImages: .\protocol images\Nicotine
+NrOfConditions:  4
+
+Baseline
+Num:1
+change:1
+   1   20 
+Image: 1.jpg;
+Cond_img: plus.jpg
+Color: 50 50 255
+
+DownReg
+Num:4
+change:1
+  21   44
+  47   70 
+  73   96 
+  99   122
+Image: 2.jpg;3.jpg;4.jpg;5.jpg;
+Cond_img: imagine.jpg
+Color: 50 255 50
+
+Rest
+Num:3
+change:0
+  45   46 
+  71   72 
+  97   98 
+Image:
+Cond_img: hash.jpg 
+Color: 50 255 250
+
+Reward
+Num:1
+change:0
+123   124 
+Image:
+Cond_img: coin8.BMP 
+Color: 250 255 50
+
+ConditionSequence:   1 2 3 2 3 2 3 2 4  
+
+PerformanceCriteria: 9 1 0 1 0 1 0 1 0 
+
+Down_UP_Regulation:  0 2 0 2 0 2 0 2 0  
+
+Feedback_con_del:    0 1 0 1 0 1 0 1 2
+
+Reward_sequence:     0 0 0 0 0 0 0 0 3
+
+ResponseConditions:  0
+
+NrOfVolumeToSkip: 10
+
+NrOfVolumes: 118
+
+NrOfColumns: 5
+
+NrOfRows: 5
+
+ROI_count: 0.5 0.5 -1
+
+Motion_translation_threshold: 0.5
+
+Motion_degree_threshold: 1
+
+Correl_window: 8
+
+Repetition_Time: 1.5

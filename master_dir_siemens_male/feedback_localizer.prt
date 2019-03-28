@@ -1,0 +1,75 @@
+FileVersion:        2
+ResolutionOfTime:   Volumes
+Experiment:         feedback
+BackgroundColor:    0 0 0
+TextColor:          255 255 255
+TimeCourseColor:    255 255 255
+TimeCourseThick:    3
+ReferenceFuncColor: 0 0 80
+ReferenceFuncThick: 3
+NrOfImages: 0
+PathImages: .\protocol images\oldage
+NrOfConditions:  5
+Low_MSIT
+Num: 3
+1   20
+101 120
+201 220
+Image: 
+Cond_img: plus.jpg
+Color: 80 240 80
+High_MSIT
+Num:3
+51  70
+151 170
+251 270
+Image: 
+Cond_img:arrow.jpg
+Color: 80  80 240
+Low_MSIT_Face
+Num: 3
+26  45
+126 145
+226 245
+Image: 
+Cond_img: plus.jpg
+Color: 180 240 80
+High_MSIT_Face
+Num:3
+76  95
+176 195
+276 295
+Image: 
+Cond_img:arrow.jpg
+Color: 80  180 240
+Rest
+Num:11
+21  25
+46  50
+71  75
+96  100
+121 125
+146 150
+171 175
+196 200
+221 225
+246 250
+271 275
+Image: 
+Cond_img:black.jpg
+Color: 0  0 0
+ConditionSequence:   1 5 3 5 2 5 4 5 1 5 3 5 2 5 4 5 1 5 3 5 2 5 4
+PerformanceCriteria: 9 0 1 0 9 0 1 0 9 0 1 9 0 1 0 9 0 1 0 9 0 1 0
+Down_UP_Regulation:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Feedback_con_del:    0 2 0 2 0 2 0 2 0 2 0 2 0 2 0 2 0 2 0 2 0 2 0
+Reward_sequence:     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ResponseConditions:  0
+NrOfVolumeToSkip: 10
+NrOfVolumes: 305
+NrOfColumns: 6
+NrOfRows: 8
+ROI_count: 1 1 -1 -1
+Motion_translation_threshold: 0.5
+Motion_degree_threshold: 1
+Correl_window: 8
+Repetition_Time: 1.5
