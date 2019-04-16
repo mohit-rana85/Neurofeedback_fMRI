@@ -73,7 +73,9 @@ end
 warning( 'off'); %#ok<WNOFF>
 if ~isdeployed
     handles.b.conf.current_dir=fileparts(which('bci_gui.m'));
-    addpath(genpath(handles.b.conf.current_dir));
+    addpath(handles.b.conf.current_dir);
+    addpath(genpath([handles.b.conf.current_dir,filesep,'SPM']))
+    addpath(genpath([handles.b.conf.current_dir,filesep,'protocol images']))
     cd(handles.b.conf.current_dir);
 else
     handles.b.conf.current_dir=pwd;
@@ -522,9 +524,9 @@ try
     set(handles.session_log,'string',handles.b.session_log_str,'value',length(handles.b.session_log_str));
     handles.b.pre.realign_opt.PW='';
     handles.b.pre.realign_opt.graphics=0;
-    handles.b.pre.realign_opt.lkp=1;
+    handles.b.pre.realign_opt.lkp=1:6;
     handles.b.pre.realign_opt.wrap=[0 0 0];
-    handles.b.pre.realign_opt.interp=4;
+    handles.b.pre.realign_opt.interp=2;
     handles.b.pre.realign_opt.sep=4;
     handles.b.pre.realign_opt.quality = 0.9;
     handles.b.pre.realign_opt.fwhm    = 5;

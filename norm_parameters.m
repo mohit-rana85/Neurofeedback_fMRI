@@ -5,6 +5,7 @@ try
     if handles.b.conf.session>1 || ( handles.b.conf.session==1 && handles.b.Feedback.dummy_idx>1)
         VG1=spm_vol(handles.b.pre.normalization.initial_functional_image);
         VF1=spm_vol(handles.b.pre.normalization.spm_mean_img);
+        handles.b.Feedback.mean_dummy_mat=VF1.mat;
         x1 = spm_coreg(VG1,VF1,handles.b.pre.coreg_flag);
         handles.b.pre.normalization.current_M  = spm_matrix(x1);
         MM1= spm_get_space(handles.b.pre.normalization.spm_mean_img);
@@ -105,17 +106,17 @@ try
         [out,dat,NO] =write_file([handles.b.pre.normalization.norm_defs.out{1}.pull.fnames{2},',',num2str(1)],handles.b.pre.normalization.norm_Def,handles.b.pre.normalization.norm_mat,handles.b.pre.normalization.norm_defs.out{1}.pull,handles.b.pre.normalization.norm_interp,handles.b.pre.normalization.norm_msk);
         NO.dat(:,:,:,1,1,1) = dat;
         clear dat NO
-        [p,f,ext]=fileparts(handles.b.pre.normalization.spm_mean_img);
-        [out,dat,NO] =write_file([p,filesep,f,ext ,',',num2str(1)],handles.b.pre.normalization.norm_Def,handles.b.pre.normalization.norm_mat,handles.b.pre.normalization.norm_defs.out{1}.pull,handles.b.pre.normalization.norm_interp,handles.b.pre.normalization.norm_msk);
+        [p1,f1,ext]=fileparts(handles.b.pre.normalization.spm_mean_img);
+        [out,dat,NO] =write_file([p1,filesep,f1,ext ,',',num2str(1)],handles.b.pre.normalization.norm_Def,handles.b.pre.normalization.norm_mat,handles.b.pre.normalization.norm_defs.out{1}.pull,handles.b.pre.normalization.norm_interp,handles.b.pre.normalization.norm_msk);
         NO.dat(:,:,:,1,1,1) = dat;
-        handles.b.localizer.P=[p,filesep,'w',f,ext];
+        handles.b.localizer.P=[p1,filesep,'w',f1,ext];
         clear dat NO 
         [p,f,ext]=fileparts(handles.b.pre.normalization.extracted_anatomical_image);
         [out,dat,NO] =write_file([p,filesep,f,ext ,',',num2str(1)],handles.b.pre.normalization.norm_Def,handles.b.pre.normalization.norm_mat,handles.b.pre.normalization.norm_defs.out{1}.pull,handles.b.pre.normalization.norm_interp,handles.b.pre.normalization.norm_msk);
         NO.dat(:,:,:,1,1,1) = dat;
         clear dat NO
        % try
-            img_f1=spm_vol(fullfile(p ,['w',f,ext ]));
+            img_f1=spm_vol(fullfile(p1 ,['w',f1,ext ]));
             img_f = spm_read_vols(img_f1);
             img =  spm_read_vols(spm_vol([ pth,filesep,'w',nn,et]));
             img1 =  spm_read_vols(spm_vol([ pth1,filesep,'w',nn1,et1]));
@@ -153,7 +154,7 @@ try
         img_f( (img_f<0)) = 0 ;
         for in=1:size(img_f,3)
             nn=find(img_f(:,:,in)>100);
-            % figure, imshow(img_f.img(:,:,in),[1 ,1000])
+            % figure, imshow(img_f(:,:,in),[1 ,1000])
             if ( size(nn,1)/(size(img_f,2)*size(img_f,1)))>0.05
                 i11=i11+1;
                 handles.b.pre.func_planes(i11)=in;

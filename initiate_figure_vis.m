@@ -6,11 +6,14 @@ try
     handles.b.figures.image_vis_fig=figure('MenuBar','none','NumberTitle', 'off','Color',[0.5 0.5 0.5],'resize','off','Name','Images and Realignment parameters','visible','on','Position', [round(handles.b.pre.screen_res(3)*0.33),round(handles.b.pre.screen_res(4)*0.05),round(handles.b.pre.screen_res(3)*0.33), round(handles.b.pre.screen_res(4)*0.92)]);
     handles.b.figures.para_axes=axes('Position',[0.09 0.04 0.85 0.2]);
     position_figure=get(handles.b.figures.image_vis_fig,'position');
-    axes_TextBox = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.35),(position_figure(4)*0.28),190,15],'string','Realignment Parameters','FontWeight','BOLD');
+    axes_TextBox = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.35),(position_figure(4)*0.30),190,15],'string','Realignment Parameters','FontWeight','BOLD');
     image_TextBox = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.32),(position_figure(4)*0.98),150 ,15],'string','Functional Images','FontWeight','BOLD');
-    handles.b.figures.Feedback_TextBox = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.091),(position_figure(4)*0.25),round(handles.b.pre.screen_res(3)*0.33)*0.85,20],'string',['X:      -        ','Y:      -        ','Z:      -        ','Pitch:      -        ','Roll:      -        ','Yaw:      -        '],'FontWeight','BOLD','FontSize',11);
+    uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.01),(position_figure(4)*0.28),90,17],'string','Session-','FontWeight','BOLD','FontSize',10);
+    handles.b.figures.Feedback_TextBox_session = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.125),(position_figure(4)*0.28),round(handles.b.pre.screen_res(3)*0.33)*0.85,17],'string',['X:      -        ','Y:      -        ','Z:      -        ','Pitch:      -        ','Roll:      -        ','Yaw:      -        '],'FontWeight','BOLD','FontSize',10);
+    uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.01),(position_figure(4)*0.25),90,17],'string','Run-','FontWeight','BOLD','FontSize',10);
+    handles.b.figures.Feedback_TextBox_run = uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.125),(position_figure(4)*0.25),round(handles.b.pre.screen_res(3)*0.33)*0.85,17],'string',['X:      -        ','Y:      -        ','Z:      -        ','Pitch:      -        ','Roll:      -        ','Yaw:      -        '],'FontWeight','BOLD','FontSize',11);
    
-    handles.b.figures.image_axes=axes('Position',[0.05 0.3 0.85 0.66]);
+    handles.b.figures.image_axes=axes('Position',[0.05 0.32 0.85 0.66]);
     if  strcmp(handles.b.session_type,'Feedback Run')
         uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.01),(position_figure(4)*0.68),30,30],'string','R','FontSize',20,'FontWeight','BOLD');
         uicontrol('style','text','parent', handles.b.figures.image_vis_fig,'position',[(position_figure(3)*0.95),(position_figure(4)*0.68),30,30],'string','L','FontSize',20,'FontWeight','BOLD');

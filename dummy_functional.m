@@ -42,6 +42,10 @@ try
                 %             end
                 
                 handles.b.Feedback.current_para_tot(i1,:)=handles.b.current_volume.para(2,:);
+                if  handles.b.Feedback.current_volume==2
+                     aa=(round(handles.b.Feedback.current_para_tot(i1,:)*100))/100;
+                     set( handles.b.figures.Feedback_TextBox_run,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                end
                 handles=plot_image_para(handles);
                 handles.b.current_volume=[];
             end

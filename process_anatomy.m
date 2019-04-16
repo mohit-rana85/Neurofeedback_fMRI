@@ -37,7 +37,7 @@ try
     end
     handles.b.session_log_str{length(  handles.b.session_log_str)+1,1}='Segmenting the structural image..';
     set(  handles.session_log,'string',  handles.b.session_log_str,'value',length(  handles.b.session_log_str));
-     waitbar(1/10)
+    waitbar(1/10)
     obj.image=  spm_vol(char(handles.b.pre.anatomical_image));
     tpm=['.\SPM\tpm\TPM.nii,1';
         '.\SPM\tpm\TPM.nii,2';
@@ -93,15 +93,15 @@ try
     copyfile(handles.b.pre.normalization.gm_anatomical_image,handles.b.pre.ori.gm_anatomical_image );
     copyfile(handles.b.pre.normalization.wm_anatomical_image,handles.b.pre.ori.wm_anatomical_image );
     copyfile( handles.b.pre.normalization.norm_def, handles.b.pre.ori.norm_def);
-      waitbar(9/10)
-        handles.b.pre.ana_hdr= spm_vol([path1,filesep,'m',nam,ext]);
-        handles.b.pre.ana_c1_hdr=  spm_vol([path1,filesep,'c1',nam,ext]);
-        handles.b.pre.ana_c2_hdr=  spm_vol([path1,filesep,'c2',nam,ext]);
-        handles.b.pre.ana_c3_hdr=  spm_vol([path1,filesep,'c3',nam,ext]);
-        handles.b.pre.ana_ext_hdr=  spm_vol([path1,filesep,'e_',nam,ext]);
-   handles.b.pre.ana_hdr_img=spm_read_vols(handles.b.pre.ana_hdr);
+    waitbar(9/10)
+    handles.b.pre.ana_hdr= spm_vol([path1,filesep,'m',nam,ext]);
+    handles.b.pre.ana_c1_hdr=  spm_vol([path1,filesep,'c1',nam,ext]);
+    handles.b.pre.ana_c2_hdr=  spm_vol([path1,filesep,'c2',nam,ext]);
+    handles.b.pre.ana_c3_hdr=  spm_vol([path1,filesep,'c3',nam,ext]);
+    handles.b.pre.ana_ext_hdr=  spm_vol([path1,filesep,'e_',nam,ext]);
+    handles.b.pre.ana_hdr_img=spm_read_vols(handles.b.pre.ana_hdr);
     handles.b.pre.ana_ext_hdr_img=spm_read_vols(handles.b.pre.ana_ext_hdr);
-     handles.b.pre.ana_c1_hdr_img=spm_read_vols(handles.b.pre.ana_c1_hdr);
+    handles.b.pre.ana_c1_hdr_img=spm_read_vols(handles.b.pre.ana_c1_hdr);
     handles.b.pre.ana_c2_hdr_img=spm_read_vols(handles.b.pre.ana_c2_hdr);
     handles.b.pre.norm_def=[path1,filesep,'y_',nam,ext];
     close(h)
@@ -124,7 +124,7 @@ try
         pause(0.01)
     end
     close(anatomy_vis)
-     handles.b.iserror=0;
+    handles.b.iserror=0;
 catch ME
     handles=error_log_display(handles,ME);
     handles.b.iserror=1;

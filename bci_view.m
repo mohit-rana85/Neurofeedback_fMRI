@@ -51,7 +51,7 @@ try
     handles.b.Feedback.base_diff=[];
     handles.b.flag.feed_go=0;money=0;
     handles.b.Feedback.money(1:handles.b.proto.seq_length)=0;  handles.b.Feedback.money_cont(1: handles.b.proto.seqview.block{handles.b.proto.seq_length}(2))=0;
-%     handles.b.shaping.index=0;
+    %     handles.b.shaping.index=0;
     % handles.b.ui.thresh_feed=0;
     handles.b.Feedback.total_money=0;
     handles.b.Feedback.not_vol_incl=0;
@@ -116,13 +116,13 @@ try
                 file_path=[path_file,filename];
             end
             if exist(file_path,'file')~=2
-                 pre = '<HTML><FONT color="';
-                 post = '</FONT></HTML>';
-                 figure(handles.b.figures.figure_session_log);
-                 handles.b.session_log_str{length(  handles.b.session_log_str)+1,1}= [pre ,rgb2Hex( [235 53 53] ), '">' ,'Error at line ','112',' in ', 'Wrong file selected' , post];
-                 set(handles.session_log,'string',  handles.b.session_log_str,'value',length(  handles.b.session_log_str));
-                 handles.b.iserror=1;
-                 return
+                pre = '<HTML><FONT color="';
+                post = '</FONT></HTML>';
+                figure(handles.b.figures.figure_session_log);
+                handles.b.session_log_str{length(  handles.b.session_log_str)+1,1}= [pre ,rgb2Hex( [235 53 53] ), '">' ,'Error at line ','112',' in ', 'Wrong file selected' , post];
+                set(handles.session_log,'string',  handles.b.session_log_str,'value',length(  handles.b.session_log_str));
+                handles.b.iserror=1;
+                return
             else
                 test_data=load(file_path);
             end
@@ -230,11 +230,7 @@ try
                         handles.b.pre.normalization.ref_file_vol_data_run=handles.b.current_volume.V;
                     end
                     % PL{1}=[ handles.b.pre.ref_file; functional_image{volume}];
-                    if volume==1
-                        aa=  spm_imatrix(handles.b.current_volume.V.mat/handles.b.pre.normalization.ref_file_vol_data.mat);
-                        aa=(round(aa*100))/100;
-                        set( handles.b.figures.Feedback_TextBox,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
-                    end
+                    
                     if handles.b.conf.session>1
                         %                     %%%%%%%%% co-regester image to sesssion 1 mean image
                         handles.b.current_volume.V.mat= (handles.b.pre.normalization.current_M\handles.b.current_volume.V.mat);
@@ -242,7 +238,7 @@ try
                         handles.b.current_volume.V.private.mat0=handles.b.current_volume.V.mat;
                         %handles.b.current_volume.V.mat0= (handles.b.pre.normalization.current_M\handles.b.current_volume.V.mat);
                     end
-                    
+                    %                    handles= sic_realign(handles);
                     handles=sic_realign2(handles);
                     
                     %%%%%%%%% co-regester image to anatomy
@@ -278,7 +274,32 @@ try
                     elseif (handles.b.flag.isrealignment) || ~handles.b.flag.isClassification
                         img=handles.b.Feedback.realign(2).private.dat(:);
                     end
-                    
+                    if volume==1
+                        if handles.b.conf.session>1
+                            aa=  spm_imatrix(handles.b.Feedback.mean_dummy_mat/handles.b.pre.normalization.ref_file_vol_data.mat);
+                            aa=(round(aa*100))/100;
+                            set( handles.b.figures.Feedback_TextBox_session,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                            aa=[];
+                            aa=  spm_imatrix(handles.b.current_volume.V.mat/handles.b.Feedback.mean_dummy_mat);
+                            aa=(round(aa*100))/100;
+                            set( handles.b.figures.Feedback_TextBox_run,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                            
+                        else
+                            if  handles.b.Feedback.dummy_idx>1
+                                aa=  spm_imatrix(handles.b.Feedback.mean_dummy_mat/handles.b.pre.normalization.ref_file_vol_data.mat);
+                                aa=(round(aa*100))/100;
+                                set( handles.b.figures.Feedback_TextBox_run,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                                aa=[];
+                                aa=  spm_imatrix(handles.b.current_volume.V.mat/handles.b.Feedback.mean_dummy_mat);
+                                aa=(round(aa*100))/100;
+                                set( handles.b.figures.Feedback_TextBox_run,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                            else
+                                aa=  spm_imatrix(handles.b.current_volume.V.mat/handles.b.pre.normalization.ref_file_vol_data.mat);
+                                aa=(round(aa*100))/100;
+                                set( handles.b.figures.Feedback_TextBox_run,'string',['X:   ',num2str(aa(1)),'   ','Y:   ',num2str(aa(2)),'   ','Z:   ',num2str(aa(3)),'   ','Pitch:   ',num2str(aa(4)),'   ','Roll:   ',num2str(aa(5)),'   ','Yaw:   ',num2str(aa(6)),'   ']);
+                            end
+                        end
+                    end
                     if ~handles.b.flag.isClassification
                         handles.b.proto.seqview.ori_data(volume,:)= (sum(double(repmat(img,[1,length(handles.b.roi.count)+1])).*double([handles.b.roi.mask_vox_ss,handles.b.pre.normalization.global_voxels ])))./sum(double([handles.b.roi.mask_vox_ss,handles.b.pre.normalization.global_voxels ]));
                         if volume>8
@@ -321,10 +342,10 @@ try
                     else %%% classification code
                     end
                 else %%% is testing code
-                     handles.b.proto.seqview.per_global(volume)=0;
-                     handles.b.proto.seqview.data(volume,:)=test_data.data(:,volume)';
-                     handles.b.proto.seqview.per_ROI(volume,length(handles.b.roi.count))=0;
-                     handles.b.Feedback.current_para_tot(volume,:)=zeros(6,1);
+                    handles.b.proto.seqview.per_global(volume)=0;
+                    handles.b.proto.seqview.data(volume,:)=test_data.data(:,volume)';
+                    handles.b.proto.seqview.per_ROI(volume,length(handles.b.roi.count))=0;
+                    handles.b.Feedback.current_para_tot(volume,:)=zeros(6,1);
                     % pause(handles.b.roi.TR-0.2);
                 end
                 
@@ -424,8 +445,8 @@ try
                 if handles.b.flag.multi_base
                     if handles.b.perf.criteria(current_cond)==1 || handles.b.perf.criteria(current_cond)==2
                         for iin1=1: size(handles.b.pre.base_cat,2)
-                             ss=strfind(handles.b.proto.seqview.image_name{handles.b.Feedback.current_cond}{1},filesep);
-                             aa=strfind( handles.b.proto.seqview.image_name{handles.b.Feedback.current_cond}{1}(ss(end)+1:end),handles.b.pre.base_cat{1,iin1});
+                            ss=strfind(handles.b.proto.seqview.image_name{handles.b.Feedback.current_cond}{1},filesep);
+                            aa=strfind( handles.b.proto.seqview.image_name{handles.b.Feedback.current_cond}{1}(ss(end)+1:end),handles.b.pre.base_cat{1,iin1});
                             %aa=strfind( handles.b.proto.seqview.image_name{handles.b.Feedback.current_cond},handles.b.pre.base_cat{1,iin1});
                             if ~isempty(aa)
                                 handles.b.Feedback.mean_baseline_roi=handles.b.Feedback.base_diff_mean(:,iin1)';
@@ -833,10 +854,10 @@ try
                 set(handles.session_log,'string',  handles.b.session_log_str,'value',length(  handles.b.session_log_str));
                 
             end
-          if  ~handles.b.flag.istesting  
-            NO.dat(:,:,:,1,1,1) = handles.b.current_volume.volume_norm;
-          end
-          tt(4,volume)=toc;
+            if  ~handles.b.flag.istesting
+                NO.dat(:,:,:,1,1,1) = handles.b.current_volume.volume_norm;
+            end
+            tt(4,volume)=toc;
             %             t3(volume)= t2(volume)-t1(volume);
             %             t3(volume)
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
