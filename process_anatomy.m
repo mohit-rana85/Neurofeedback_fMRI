@@ -94,21 +94,15 @@ try
     copyfile(handles.b.pre.normalization.wm_anatomical_image,handles.b.pre.ori.wm_anatomical_image );
     copyfile( handles.b.pre.normalization.norm_def, handles.b.pre.ori.norm_def);
       waitbar(9/10)
-    try
-        
-        handles.b.pre.ana_hdr= load_nii([path1,filesep,'m',nam,ext]);
-        handles.b.pre.ana_c1_hdr= load_nii([path1,filesep,'c1',nam,ext]);
-        handles.b.pre.ana_c2_hdr= load_nii([path1,filesep,'c2',nam,ext]);
-        handles.b.pre.ana_c3_hdr= load_nii([path1,filesep,'c3',nam,ext]);
-        handles.b.pre.ana_ext_hdr= load_nii([path1,filesep,'e_',nam,ext]);
-    catch
-        
-        handles.b.pre.ana_hdr= load_untouch_nii([path1,filesep,'m',nam,ext]);
-        handles.b.pre.ana_c1_hdr=load_untouch_nii([path1,filesep,'c1',nam,ext]);
-        handles.b.pre.ana_c2_hdr= load_untouch_nii([path1,filesep,'c2',nam,ext]);
-        handles.b.pre.ana_c3_hdr= load_untouch_nii([path1,filesep,'c3',nam,ext]);
-        handles.b.pre.ana_ext_hdr= load_untouch_nii([path1,filesep,'e_',nam,ext]);
-    end
+        handles.b.pre.ana_hdr= spm_vol([path1,filesep,'m',nam,ext]);
+        handles.b.pre.ana_c1_hdr=  spm_vol([path1,filesep,'c1',nam,ext]);
+        handles.b.pre.ana_c2_hdr=  spm_vol([path1,filesep,'c2',nam,ext]);
+        handles.b.pre.ana_c3_hdr=  spm_vol([path1,filesep,'c3',nam,ext]);
+        handles.b.pre.ana_ext_hdr=  spm_vol([path1,filesep,'e_',nam,ext]);
+   handles.b.pre.ana_hdr_img=spm_read_vols(handles.b.pre.ana_hdr);
+    handles.b.pre.ana_ext_hdr_img=spm_read_vols(handles.b.pre.ana_ext_hdr);
+     handles.b.pre.ana_c1_hdr_img=spm_read_vols(handles.b.pre.ana_c1_hdr);
+    handles.b.pre.ana_c2_hdr_img=spm_read_vols(handles.b.pre.ana_c2_hdr);
     handles.b.pre.norm_def=[path1,filesep,'y_',nam,ext];
     close(h)
     screen_res = get(0,'screensize');
@@ -123,8 +117,8 @@ try
     
     set(ax,'xticklabel',[]);set(ax,'yticklabel',[]);
     set(ax,'XTick',[]);set(ax,'YTick',[]);
-    for ii=1:size(handles.b.pre.ana_hdr.img,3)
-        image=[rot90(double(handles.b.pre.ana_hdr.img(:,:,ii))./max(max(double(handles.b.pre.ana_hdr.img(:,:,ii))))),rot90(double(handles.b.pre.ana_ext_hdr.img(:,:,ii))./max(max(double(handles.b.pre.ana_ext_hdr.img(:,:,ii))))),rot90(double(handles.b.pre.ana_c1_hdr.img(:,:,ii))./max(max(double(handles.b.pre.ana_c1_hdr.img(:,:,ii))))),rot90(double(handles.b.pre.ana_c2_hdr.img(:,:,ii))./max(max(double(handles.b.pre.ana_c2_hdr.img(:,:,ii)))))];
+    for ii=1:size(handles.b.pre.ana_hdr_img,3)
+        image=[rot90(double(handles.b.pre.ana_hdr_img(:,:,ii))./max(max(double(handles.b.pre.ana_hdr_img(:,:,ii))))),rot90(double(handles.b.pre.ana_ext_hdr_img(:,:,ii))./max(max(double(handles.b.pre.ana_ext_hdr_img(:,:,ii))))),rot90(double(handles.b.pre.ana_c1_hdr_img(:,:,ii))./max(max(double(handles.b.pre.ana_c1_hdr_img(:,:,ii))))),rot90(double(handles.b.pre.ana_c2_hdr_img(:,:,ii))./max(max(double(handles.b.pre.ana_c1_hdr_img(:,:,ii)))))];
         figure(anatomy_vis)
         imshow( image ,[0 1])
         pause(0.01)
