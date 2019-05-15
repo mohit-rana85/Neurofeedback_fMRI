@@ -181,7 +181,7 @@ handles.session_log=uicontrol('Style','ListBox','FontWeight','BOLD','FontSize',1
 try
     handles.b.ver = 2.0;
     handles.b.ui.simtype = 'NONE';
-    handles.b.version = ['Santiago fMRI-BCI Version ' sprintf('%.1f',handles.b.ver) ', October 2016.'];
+    handles.b.version = ['Tübingen fMRI-BCI Version ' sprintf('%.1f',handles.b.ver) ', October 2016.'];
     %fprintf('\n%s\n\n', handles.b.version );
     % pos=get(handles.bcigui,'Position');
     handles.tgroup = uitabgroup('Parent', handles.bcigui,'position',[0 0.277 0.999 0.28],'BackgroundColor',[0.5 0.5 0.5]);
@@ -1084,7 +1084,7 @@ try
                 '- did you mess up the protocol file ?' ] );
         end
         
-    elseif ~strcmp(handles.b.session_type,'Anatomical Run')
+    elseif ~(strcmp(handles.b.session_type,'Anatomical Run') )%||  strcmp(handles.b.session_type,'Dummy Functional Run'))
         [handles,status] = bci_generator_no_TBV(handles);
         if ~status
             set(handles.GenConfigFilesPB,'Backgroundcolor', 'cyan');

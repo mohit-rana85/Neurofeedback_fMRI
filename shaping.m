@@ -3,7 +3,7 @@
 function handles=shaping(handles,volume)
 try
     if handles.b.Feedback.current_block(1)==volume
-        TRs=handles.b.proto.seqview.block{handles.b.Feedback.current_cond};
+        TRs=handles.b.proto.seqview.block{handles.b.Feedback.current_cond-1}(1):handles.b.proto.seqview.block{handles.b.Feedback.current_cond-1}(2);
         for ii=1:size(handles.b.proto.seqview.data,2)-1
             handles.b.shaping.unique_TR{ii}= unique(handles.b.proto.seqview.data(TRs,ii),'sorted');
             if strcmp(handles.b.shaping.regulation, 'upregulation')
@@ -17,7 +17,7 @@ try
         end
        
     else
-        if handle.b.Feedback.block_data(volume)>0
+        if handle.b.Feedback.block_data(volume-1)>0
            
          for ii=1:size(handles.b.proto.seqview.data,2)-1
             if strcmp(handles.b.shaping.regulation, 'upregulation')
