@@ -17,7 +17,7 @@ try
         end
        
     else
-        if handle.b.Feedback.block_data(volume-1)>0
+        if handles.b.Feedback.blockData(volume-1)>0
            
          for ii=1:size(handles.b.proto.seqview.data,2)-1
             if strcmp(handles.b.shaping.regulation, 'upregulation')

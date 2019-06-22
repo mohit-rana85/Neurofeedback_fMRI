@@ -17,9 +17,12 @@ PathImages: .\protocol images\Nicotine
 NrOfConditions:  4
 
 Baseline
-Num:1
+Num:4
 change:1
-   1   20 
+   1   24
+  52   75
+ 103   126
+ 154   177
 Image: 1.jpg;
 Cond_img: plus.jpg
 Color: 50 50 255
@@ -27,10 +30,10 @@ Color: 50 50 255
 DownReg
 Num:4
 change:1
-  21   44
-  47   70 
-  73   96 
-  99   122
+  25   48
+  76   99 
+  127  150 
+  178  201
 Image: 2.jpg;3.jpg;4.jpg;5.jpg;
 Cond_img: imagine.jpg
 Color: 50 255 50
@@ -38,9 +41,9 @@ Color: 50 255 50
 Rest
 Num:3
 change:0
-  45   46 
-  71   72 
-  97   98 
+  49    51 
+  100   102 
+  151   153 
 Image:
 Cond_img: hash.jpg 
 Color: 50 255 250
@@ -48,26 +51,26 @@ Color: 50 255 250
 Reward
 Num:1
 change:0
-123   124 
+202   203
 Image:
 Cond_img: coin8.BMP 
 Color: 250 255 50
 
-ConditionSequence:   1 2 3 2 3 2 3 2 4  
+ConditionSequence:   1 2 3 1 2 3 1 2 3 1 2 4
 
-PerformanceCriteria: 9 1 0 1 0 1 0 1 0 
+PerformanceCriteria: 9 1 0 9 1 0 9 1 0 9 1 0
 
-Down_UP_Regulation:  0 2 0 2 0 2 0 2 0  
+Down_UP_Regulation:  0 2 0 0 2 0 0 2 0 0 2 0
 
-Feedback_con_del:    0 1 0 1 0 1 0 1 2
+Feedback_con_del:    0 1 0 0 1 0 0 1 0 0 1 2
 
-Reward_sequence:     0 0 0 0 0 0 0 0 3
+Reward_sequence:     0 0 0 0 0 0 0 0 0 0 0 3
 
 ResponseConditions:  0
 
 NrOfVolumeToSkip: 10
 
-NrOfVolumes: 118
+NrOfVolumes: 213
 
 NrOfColumns: 5
 

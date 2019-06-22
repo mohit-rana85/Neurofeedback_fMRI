@@ -1,24 +1,27 @@
 Num_cond_Block: 4
 Block: Baseline
-Num: 1
-1 20
+Num: 4
+   1   24
+  62   85
+ 113   136
+ 164   187
 Color: 75 75 255
 Block: Regulation
 Num: 4
-  21   44
-  47   70 
-  73   96 
-  99   122 
+  25 48
+  86 109
+ 137 160
+ 188 211
 Color: 75 255 75
 Block: Rest
 Num: 3
-  45   46 
-  71   72 
-  97   98 
+  49   51
+  110  112
+  161  163
 Color: 50 255 250
 Block: Reward
 Num: 1
-123 124
+212  213
 Color: 250 250 0
-seqview: 1 2 3 2 3 2 3 2 4
+seqview: 1 2 3 1 2 3 1 2 3 1 2 4
 
