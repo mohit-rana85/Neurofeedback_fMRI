@@ -150,6 +150,7 @@ try
         % close(anatomy_vis_mask)
         waitbar(4/5);
         i11=0;
+         handles.b.pre.func_planes=0;
         img_f(isnan(img_f)) = 0 ;
         img_f( (img_f<0)) = 0 ;
         for in=1:size(img_f,3)

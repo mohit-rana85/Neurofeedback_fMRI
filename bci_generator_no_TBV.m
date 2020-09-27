@@ -11,70 +11,89 @@ try
     else
         handles.b.conf.current_proto_file = fullfile(handles.b.conf.target_subj_path,sprintf('%s-%i.prt', handles.b.conf.exp_name, handles.b.conf.neuro_run_num) );
         handles.b.conf.current_proto_block_file=fullfile(handles.b.conf.master_dir,'feedback.blocks');
-        
+        fid=fopen( [handles.b.conf.master_dir, filesep, handles.b.conf.exp_name '.prt'], 'rt' );
+        num_images= bci_str2int( bci_read_matchline( fid, 'NrOfImages',handles));
+        fclose(fid);
         % if exist( handles.b.conf.current_proto_file,'file' ) == 2
         %     msgbox()
         %     status=0;
         %     return
         % end
-        fid_image_stim=fopen([handles.b.conf.master_dir, filesep,sprintf('Run_%02i.txt',handles.b.conf.neuro_run_num)],'rt');
-        i1=0;change=0;
-        while 1
-            tline=fgetl(fid_image_stim);
-            if tline==-1
-                clear tline
-                break;
+        if num_images>0
+            fid_image_stim=fopen([handles.b.conf.master_dir, filesep,sprintf('Run_%02i.txt',handles.b.conf.neuro_run_num)],'rt');
+            i1=0;change=0;
+            while 1
+                tline=fgetl(fid_image_stim);
+                if tline==-1
+                    clear tline
+                    break;
+                end
+                if ~isempty(deblank(tline))
+                    i1=i1+1;
+                    handles.b.proto.stim_images{i1}=tline;
+                end
+                
             end
-            if ~isempty(deblank(tline))
-                i1=i1+1;
-                handles.b.proto.stim_images{i1}=tline;
-            end
-            
-        end
-        waitbar(1/5);
-        fid_in = fopen( [handles.b.conf.master_dir, filesep, handles.b.conf.exp_name '.prt'], 'rt' );
-        fid_out = fopen( handles.b.conf.current_proto_file, 'wt' );
-        %Replace values specific to the current experiment in the TBV file
-        images_nr=0;xx=0;ii1=1;
-        while 1
-            tline=fgetl(fid_in);
-            if tline==-1
-                clear tline
-                break;
-            end
-            
-            if ~isempty(deblank(tline))
-                if strcmp(tline(1:4),'Imag')
-                    new_text='';ii1=ii1+1;waitbar(ii1/10);
-                    if length(handles.b.proto.stim_images)>=images_nr+blocks && change
-                        for ii=images_nr+1:images_nr+blocks
-                            new_text=[new_text,handles.b.proto.stim_images{ii},';'];
+            waitbar(1/5);
+            fid_in = fopen( [handles.b.conf.master_dir, filesep, handles.b.conf.exp_name '.prt'], 'rt' );
+            fid_out = fopen( handles.b.conf.current_proto_file, 'wt' );
+            %Replace values specific to the current experiment in the TBV file
+            images_nr=0;xx=0;ii1=1;
+            while 1
+                tline=fgetl(fid_in);
+                if tline==-1
+                    clear tline
+                    break;
+                end
+                
+                if ~isempty(deblank(tline))
+                    if strcmp(tline(1:4),'Imag')
+                        new_text='';ii1=ii1+1;waitbar(ii1/10);
+                        if length(handles.b.proto.stim_images)>=images_nr+blocks && change
+                            for ii=images_nr+1:images_nr+blocks
+                                new_text=[new_text,handles.b.proto.stim_images{ii},';'];
+                            end
+                            images_nr=images_nr+blocks;
+                        elseif ~change
+                            new_text=tline(strfind(tline,':')+1:end);
+                        elseif length(handles.b.proto.stim_images)==blocks && change
+                            for ii=1:blocks
+                                new_text=[new_text,handles.b.proto.stim_images{ii},'.jpg ;'];
+                            end
+                        else
+                            new_text='';
                         end
-                        images_nr=images_nr+blocks;
-                    elseif ~change
-                        new_text=tline(strfind(tline,':')+1:end);
-                    elseif length(handles.b.proto.stim_images)==blocks && change
-                        for ii=1:blocks
-                            new_text=[new_text,handles.b.proto.stim_images{ii},'.jpg ;'];
-                        end
+                        fprintf(fid_out, '%s\n',  ['Image: ',new_text] ); change=0;
+                    elseif strcmp(tline(1:3),'Num')
+                        blocks=str2num(tline(strfind(tline,':')+1:end));
+                        fprintf(fid_out, '%s\n', tline);
+                    elseif strcmp(tline(1:3),'cha')
+                        change=str2num(tline(strfind(tline, ':')+1:end));
+                         fprintf(fid_out, '%s\n', tline);
                     else
-                        new_text='';
+                        fprintf(fid_out, '%s\n', tline);
+                        
                     end
-                    fprintf(fid_out, '%s\n',  ['Image: ',new_text] ); change=0;
-                elseif strcmp(tline(1:3),'Num')
-                    blocks=str2num(tline(strfind(tline,':')+1:end));
-                    fprintf(fid_out, '%s\n', tline);
-                elseif strcmp(tline(1:3),'cha')
-                    change=str2num(tline(strfind(tline, ':')+1:end));
-                else
-                    fprintf(fid_out, '%s\n', tline);
-                    
                 end
             end
+            close(h);
+            fclose( fid_in );
+            fclose( fid_out );
+        else
+            fid_in = fopen( [handles.b.conf.master_dir, filesep, handles.b.conf.exp_name '.prt'], 'rt' );
+            fid_out = fopen( handles.b.conf.current_proto_file, 'wt' );
+             while 1
+                tline=fgetl(fid_in);
+                if tline==-1
+                    clear tline
+                    break;
+                end
+                fprintf(fid_out, '%s\n', tline);
+             end
+            fclose( fid_in );
+            fclose( fid_out );
+            close(h);
         end
-        close(h);
-        fclose( fid_in );
-        fclose( fid_out );
     end
     figure(handles.b.figures.figure_session_log);
     handles.b.session_log_str{length(handles.b.session_log_str)+1,1}= 'Generation of config file complete.' ;

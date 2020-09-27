@@ -29,7 +29,7 @@ try
         waitbar(c/(handles.b.proto.count+2));
         handles.b.proto.cond(c).name = read_no_empty(fid);                % just to check //
         handles.b.proto.cond(c).blocks = bci_str2int( bci_read_matchline( fid, 'Num',handles ),handles);% blocks/condition
-       % handles.b.proto.cond(c).change= bci_read_matchline( fid, 'change',handles );
+        handles.b.proto.cond(c).change= bci_read_matchline( fid, 'change',handles );
         for b = 1:handles.b.proto.cond(c).blocks
             handles.b.proto.cond(c).block{b} = str2num( read_no_empty(fid)  ); % volume range
             % set up the feedback array 'data': data( 1:4, 1:volumes )

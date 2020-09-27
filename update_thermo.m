@@ -39,7 +39,7 @@ try
     end
     xx=get(handles.b.ui.thermo_ax.handle,'ylim');
     %handles.b.ui.last_gobjects.thermo(3) = line(cl.X, cl.Y, 'LineStyle', cl.linestyle, 'Color',  cl.color);
-    handles.b.ui.last_gobjects.thermo(3) = line([0 handles.b.ui.thermo_ax.w], xx(1)+ones(1,2)*((xx(2)-xx(1))/2), 'LineStyle', '--', 'Color', 'r','LineWidth', 3);
+    %handles.b.ui.last_gobjects.thermo(3) = line([0 handles.b.ui.thermo_ax.w], xx(1)+ones(1,2)*((xx(2)-xx(1))/2), 'LineStyle', '--', 'Color', 'r','LineWidth', 3);
     
     %draw the centerline
     uistack(handles.b.ui.last_gobjects.thermo(3) ,'top');

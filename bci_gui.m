@@ -57,7 +57,7 @@ function bci_gui_OpeningFcn(hObject, eventdata, handles, varargin)
 
 %Note that the bci data structure 'b' is saved under the handles structure
 clc;
-numdays=daysact(datestr(now,'mm/dd/yy'),'12/31/2019');
+numdays=daysact(datestr(now,'mm/dd/yy'),'12/31/2020');
 if numdays<0
     h=msgbox({'Your subscription has expired','Please contact morana@uc.cl for further information'},'License Error','error','modal');
     set(h,'position',[100,400,300,80]);
@@ -553,7 +553,11 @@ try
 %     handles.b.pre.seg_flag.ngfaus=[2;2;2;4];
     handles.b.pre.norm_flag.prefix='w';
     handles.b.pre.norm_flag.preserve=0;
-    handles.b.pre.norm_flag.vox=[3 ,3,3];
+    if isfield(handles.b.pre, 'norm_vox')
+        handles.b.pre.norm_flag.vox=handles.b.pre.norm_vox;
+    else
+       handles.b.pre.norm_flag.vox=[3 ,3,3];
+    end
     handles.b.pre.norm_flag.interp=7;
     handles.b.pre.norm_flag.bb=[-78,-112,-70; 78,76,85];
     handles.b.pre.norm_flag.wrap=[0,0,0];
@@ -1277,7 +1281,7 @@ try
     end
     set(handles.RunNumEdit,'BackgroundColor',[1 1 1] );
     if strcmp(handles.b.pre.MR_scanner,'Philips')
-        handles.b.conf.watch_dir=[ handles.b.conf.base_watch_dir,filesep,handles.b.conf.sub_name,filesep, handles.b.conf.run_num ];
+        handles.b.conf.watch_dir=[ handles.b.conf.base_watch_dir,filesep,handles.b.conf.sub_name,filesep, num2str(handles.b.conf.run_num) ];
         set(handles.SourceDirEdit,'string',handles.b.conf.watch_dir);
         set(handles.SourceDirEdit,'BackgroundColor',[1 1 1] );
     end

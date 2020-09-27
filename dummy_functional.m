@@ -8,9 +8,11 @@ try
     for ii=1:handles.b.pre.Dummy_volumes
         %ii=ii+1;
         if  strcmp(handles.b.pre.MR_scanner,'Siemens')
-            handles.b.current_volume.fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,ii) '.dcm'];
+            handles.b.current_volume.fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,ii),'.', handles.b.pre.file_format];
         elseif strcmp(handles.b.pre.MR_scanner,'Philips')
-            handles.b.current_volume.fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,ii) '.img'];
+            handles.b.current_volume.fname_input_next_ori=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,ii),'.',handles.b.pre.file_format];
+            handles.b.current_volume.fname_input_next=[handles.b.conf.dummy_path, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,ii),'.',handles.b.pre.file_format];
+            copyfile( handles.b.current_volume.fname_input_next_ori, handles.b.current_volume.fname_input_next);
         end
         bci_ui_wait(handles.b.current_volume.fname_input_next);
         
@@ -26,6 +28,8 @@ try
             elseif strcmp(handles.b.pre.MR_scanner,'Philips')
                 functional_image{i1}=handles.b.current_volume.fname_input_next; %#ok<AGROW>
                 handles.b.current_volume.vol_data = spm_vol(handles.b.current_volume.fname_input_next);
+                handles.b.current_volume.V=handles.b.current_volume.vol_data ;
+                handles.b.current_volume.volume= spm_read_vols(handles.b.current_volume.vol_data) ;
             end
             if ii==handles.b.pre.dummy_volumes_skip+1,
                 handles.b.pre.normalization.ref_file=functional_image{i1};

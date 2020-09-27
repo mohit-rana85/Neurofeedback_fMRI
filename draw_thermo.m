@@ -94,10 +94,10 @@ if  handles.b.proto.cond_images
     handles.b.ui.img.h = 0.15;
     handles.b.ui.img.x = handles.b.ui.thermo_ax.l + handles.b.ui.thermo_ax.w*1.2;
     handles.b.ui.img.y = handles.b.ui.thermo_ax.b  + handles.b.ui.thermo_ax.h/2 - handles.b.ui.img.h/2;
-    handles.b.ui.img.axhandle = axes('Position', [handles.b.ui.img.x handles.b.ui.img.y handles.b.ui.img.w handles.b.ui.img.h], 'Color', handles.b.ui.thermo_color);
+    handles.b.ui.img.cond_axhandle = axes('Position', [handles.b.ui.img.x handles.b.ui.img.y handles.b.ui.img.w handles.b.ui.img.h], 'Color', handles.b.ui.thermo_color);
     axis off; %Modification_RANGA_Mar17_2006
     last_gobjects.thermo(4) = handles.b.ui.thermo_ax.handle; %you should delete the image handle too later on
-    last_gobjects.thermo(5) = handles.b.ui.img.axhandle;
+    last_gobjects.thermo(5) = handles.b.ui.img.cond_axhandle;
 end
 if handles.b.flag.isref_zero
     aa=1;

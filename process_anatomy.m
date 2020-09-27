@@ -5,7 +5,7 @@ try
     if strcmp(handles.b.pre.MR_scanner,'Siemens')
         
         for ii=1: handles.b.pre.NrOfSlices_Anatomy
-            fname_input_next=[handles.b.conf.watch_dir filesep sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,ii) '.dcm'];
+            fname_input_next=[handles.b.conf.watch_dir filesep sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,ii),'.',handles.b.pre.file_format];
             if ii~=handles.b.pre.NrOfSlices_Anatomy
                 bci_ui_wait(fname_input_next );
             else
@@ -31,9 +31,14 @@ try
         end
         %    [, s_name]=sic_spm8_dicom_convert(hdr,handles.b.conf.anatomy_path,handles.b.conf.sub_name);
     elseif strcmp(handles.b.pre.MR_scanner,'Philips')
-        handles.b.pre.anatomical_image=[input_path filesep sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,1) '.img'];
-        while(exist( handles.b.pre.anatomical_image)~=2 )
+        handles.b.pre.anatomical_image_ori=[handles.b.conf.watch_dir filesep sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,1) ,'.', handles.b.pre.file_format];
+        while 1
+            if  exist( handles.b.pre.anatomical_image_ori,'file')==2  
+                break
+            end
         end
+        handles.b.pre.anatomical_image=[handles.b.conf.anatomy_path, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,1) ,'.', handles.b.pre.file_format];
+        copyfile(handles.b.pre.anatomical_image_ori, handles.b.pre.anatomical_image)
     end
     handles.b.session_log_str{length(  handles.b.session_log_str)+1,1}='Segmenting the structural image..';
     set(  handles.session_log,'string',  handles.b.session_log_str,'value',length(  handles.b.session_log_str));

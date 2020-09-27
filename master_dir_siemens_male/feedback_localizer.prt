@@ -12,6 +12,7 @@ PathImages: .\protocol images\oldage
 NrOfConditions:  5
 Low_MSIT
 Num: 3
+change: 0
 1   20
 101 120
 201 220
@@ -20,6 +21,7 @@ Cond_img: plus.jpg
 Color: 80 240 80
 High_MSIT
 Num:3
+change: 0
 51  70
 151 170
 251 270
@@ -28,6 +30,7 @@ Cond_img:arrow.jpg
 Color: 80  80 240
 Low_MSIT_Face
 Num: 3
+change: 0
 26  45
 126 145
 226 245
@@ -36,6 +39,7 @@ Cond_img: plus.jpg
 Color: 180 240 80
 High_MSIT_Face
 Num:3
+change: 0
 76  95
 176 195
 276 295
@@ -44,6 +48,7 @@ Cond_img:arrow.jpg
 Color: 80  180 240
 Rest
 Num:11
+change: 0
 21  25
 46  50
 71  75

@@ -111,7 +111,7 @@ function handles = bci_runview(handles)
         mkdir([handles.b.conf.target_subj_path,filesep ,'Feed_',sprintf('%03d',handles.b.Feedback.feed_idx)])
         handles.b.conf.feed_path=[handles.b.conf.target_subj_path, filesep,'Feed_',sprintf('%03d',handles.b.Feedback.feed_idx)];
         handles.b.conf.out_volume_path=handles.b.conf.feed_path;
-        if size( handles.b.pre.func_planes,2)>(handles.b.pre.row*handles.b.pre.column)
+        if size( handles.b.pre.func_planes,2)>(handles.b.pre.row*handles.b.pre.column)|| abs(size( handles.b.pre.func_planes,2)-(handles.b.pre.row*handles.b.pre.column))>handles.b.pre.column
             x = inputdlg(['Enter the rows and columns for visualization (Total planes:' , num2str(size(handles.b.pre.func_planes,2)),'):'],...
                 'Example : 4 5' );
             data = str2num(x{1});

@@ -24,14 +24,14 @@ try
                 if length(handles.b.shaping.unique_TR{ii})< handles.b.Feedback.idx_shaping(ii)+handles.b.shaping.choose_TR
                      handles.b.Feedback.idx_shaping(ii)=handles.b.Feedback.idx_shaping(ii)+1;
                 end
-                handles.b.Feedback.mean_baseline_roi( 1,ii)=nanmean(handles.b.shaping.unique_TR{ii}(handles.b.Feedback.idx_shaping:handles.b.Feedback.idx_shaping+handles.b.shaping.choose_TR));
-                handles.b.Feedback.std_baseline_roi( 1,ii)=nanstd(handles.b.shaping.unique_TR{ii}(handles.b.Feedback.idx_shaping:handles.b.Feedback.idx_shaping+handles.b.shaping.choose_TR));
+                handles.b.Feedback.mean_baseline_roi( 1,ii)=nanmean(handles.b.shaping.unique_TR{ii}(handles.b.Feedback.idx_shaping(ii):handles.b.Feedback.idx_shaping(ii)+handles.b.shaping.choose_TR));
+                handles.b.Feedback.std_baseline_roi( 1,ii)=nanstd(handles.b.shaping.unique_TR{ii}(handles.b.Feedback.idx_shaping(ii):handles.b.Feedback.idx_shaping(ii)+handles.b.shaping.choose_TR));
             else
                 if length(handles.b.shaping.unique_TR{ii})< handles.b.Feedback.idx_shaping(ii)+handles.b.shaping.choose_TR
                      handles.b.Feedback.idx_shaping(ii)=handles.b.Feedback.idx_shaping(ii)+1;
                 end
-                handles.b.Feedback.mean_baseline_roi( 1,ii)=nanmean(handles.b.shaping.unique_TR{ii}(end-(handles.b.shaping.choose_TR+handles.b.Feedback.idx_shaping):end-handles.b.Feedback.idx_shaping));
-                handles.b.Feedback.std_baseline_roi( 1,ii)=nanstd(handles.b.shaping.unique_TR{ii}(end-(handles.b.shaping.choose_TR+handles.b.Feedback.idx_shaping):end-handles.b.Feedback.idx_shaping));
+                handles.b.Feedback.mean_baseline_roi( 1,ii)=nanmean(handles.b.shaping.unique_TR{ii}(end-(handles.b.shaping.choose_TR+handles.b.Feedback.idx_shaping(ii)):end-handles.b.Feedback.idx_shaping(ii)));
+                handles.b.Feedback.std_baseline_roi( 1,ii)=nanstd(handles.b.shaping.unique_TR{ii}(end-(handles.b.shaping.choose_TR+handles.b.Feedback.idx_shaping(ii)):end-handles.b.Feedback.idx_shaping(ii)));
             end
          end
         end

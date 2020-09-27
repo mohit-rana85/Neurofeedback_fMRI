@@ -104,9 +104,9 @@ try
         file_position = -1; %initialize
     else
         if  strcmp(handles.b.pre.MR_scanner,'Siemens')
-            fname_input_next_first=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,1) '.dcm'];
+            fname_input_next_first=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,1),'.', handles.b.pre.file_format];
         elseif strcmp(handles.b.pre.MR_scanner,'Philips')
-            fname_input_next_first=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,1) '.img'];
+            fname_input_next_first=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,1) ,'.', handles.b.pre.file_format];
         end
         if  handles.b.flag.istesting
             [filename, path_file]=uigetfile('*.mat','Please select the file with Synthetic data ');
@@ -141,12 +141,19 @@ try
         %         handles=initiate_figure_vis(handles);
         %         handles=plot_data_initiate(handles);
         if  strcmp(handles.b.pre.MR_scanner,'Siemens')
-            fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,handles.b.roi.volumes_skip+1) '.dcm'];
+            fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,handles.b.roi.volumes_skip+1),'.', handles.b.pre.file_format];
         elseif strcmp(handles.b.pre.MR_scanner,'Philips')
-            fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,handles.b.roi.volumes_skip+1) '.img'];
+            fname_input_next=[handles.b.conf.watch_dir, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,handles.b.roi.volumes_skip+1) ,'.', handles.b.pre.file_format];
+           
         end
         if  ~handles.b.flag.istesting
             bci_ui_wait(fname_input_next,handles);
+        end
+        if strcmp(handles.b.pre.MR_scanner,'Philips')
+            fname_input_next_ori = fname_input_next;
+            clear fname_input_next;
+            fname_input_next=[handles.b.conf.out_volume_path, filesep, sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,handles.b.roi.volumes_skip+1),'.', handles.b.pre.file_format];
+            copyfile(fname_input_next_ori, fname_input_next)
         end
     end
     
@@ -214,17 +221,19 @@ try
             if ~handles.b.flag.TBV %if we are not using TBV
                 if  ~handles.b.flag.istesting
                     if  strcmp(handles.b.pre.MR_scanner,'Siemens')
-                        fname_file=[sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,volume+handles.b.roi.volumes_skip) '.dcm'];
+                        fname_file=[sprintf(handles.b.pre.input_filename,handles.b.conf.run_num,volume+handles.b.roi.volumes_skip) ,'.', handles.b.pre.file_format];
                         handles.b.current_volume.fname_input_next=[handles.b.conf.watch_dir, filesep, fname_file];
                         bci_ui_wait(handles.b.current_volume.fname_input_next);
                         handles.b.current_volume.hdr= spm_dicom_headers(handles.b.current_volume.fname_input_next);
                         handles=spm_dicom_convert(handles);
                         tt(1,volume)=toc;
                     elseif strcmp(handles.b.pre.MR_scanner,'Philips')
-                        fname_file=[sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,volume+handles.b.roi.volumes_skip) '.img'];
-                        functional_image{volume}=[handles.b.conf.Feed_path, filesep, fname_file];
-                        bci_ui_wait(functional_image{volume} );
+                        fname_file=[sprintf(handles.b.pre.input_filename,handles.b.conf.sub_name,volume+handles.b.roi.volumes_skip) ,'.', handles.b.pre.file_format];
+                        bci_ui_wait([handles.b.conf.watch_dir, filesep, fname_file]);
+                        functional_image{volume}=[handles.b.conf.out_volume_path, filesep, fname_file];
+                        copyfile([handles.b.conf.watch_dir, filesep, fname_file], functional_image{volume})
                         handles.b.current_volume.V= spm_vol(functional_image{volume});
+                        handles.b.current_volume.volume= spm_read_vols(handles.b.current_volume.V) ;
                     end
                     if handles.b.flag.isrealignment_ref_run && volume== handles.b.roi.volumes_skip+1
                         handles.b.pre.normalization.ref_file_vol_data_run=handles.b.current_volume.V;
@@ -467,14 +476,14 @@ try
                 elseif ( handles.b.flag.isContinuous )
                     if  handles.b.perf.criteria(current_cond)~=9
                         if   handles.b.flag.isupregulation && handles.b.perf.regulation(current_cond)==1
-                            handles.b.Feedback.blockData(volume)=(handles.b.proto.seqview.data(volume,1:end-1)- handles.b.Feedback.mean_baseline_roi)./handles.b.Feedback.std_baseline_roi;
+                            handles.b.Feedback.blockData(volume)=(handles.b.proto.seqview.data(volume,1:end-1)- handles.b.Feedback.mean_baseline_roi)./handles.b.Feedback.std_baseline_roi*handles.b.roi.count';
                         elseif handles.b.flag.isdownregulation && handles.b.perf.regulation(current_cond)==2
-                            handles.b.Feedback.blockData(volume)= (handles.b.Feedback.mean_baseline_roi-handles.b.proto.seqview.data(volume,1:end-1))./handles.b.Feedback.std_baseline_roi;
+                            handles.b.Feedback.blockData(volume)= (handles.b.Feedback.mean_baseline_roi-handles.b.proto.seqview.data(volume,1:end-1))./handles.b.Feedback.std_baseline_roi*handles.b.roi.count';
                         elseif handles.b.flag.iscon_del_feedback
                             if handles.b.perf.regulation(current_cond)==1
-                                handles.b.Feedback.blockData(volume)=(handles.b.proto.seqview.data(volume,1:end-1)- handles.b.Feedback.mean_baseline_roi)./handles.b.Feedback.std_baseline_roi;
+                                handles.b.Feedback.blockData(volume)=(handles.b.proto.seqview.data(volume,1:end-1)- handles.b.Feedback.mean_baseline_roi)./handles.b.Feedback.std_baseline_roi*handles.b.roi.count';
                             elseif handles.b.perf.regulation(current_cond)==2
-                                handles.b.Feedback.blockData(volume)= (handles.b.Feedback.mean_baseline_roi-handles.b.proto.seqview.data(volume,1:end-1))./handles.b.Feedback.std_baseline_roi;
+                                handles.b.Feedback.blockData(volume)= (handles.b.Feedback.mean_baseline_roi-handles.b.proto.seqview.data(volume,1:end-1))./handles.b.Feedback.std_baseline_roi*handles.b.roi.count';
                             end
                         end
                     end

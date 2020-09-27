@@ -115,7 +115,7 @@ try
     end
     handles.b.pre.image_rgb= ind2rgb(round(zeros(size(handles.b.pre.frame)).*size(handles.b.pre.color_map_images,1)),handles.b.pre.color_map_images);
     handles.b.pre.frame_rgb=ind2rgb( handles.b.pre.frame+1,handles.b.pre.color_map_frame);
-    handles.b.figures.functional_image=imshow(handles.b.pre.image_rgb);colormap( handles.b.pre.color_map_images);
+    handles.b.figures.functional_image=image(handles.b.pre.image_rgb);colormap( handles.b.pre.color_map_images);
     hold on;
     if ~strcmp(handles.b.session_type,'Dummy Functional Run') &&   ~strcmp(handles.b.session_type,'Localizer Collect Data')  
         handles.b.pre.mask_rgb=ind2rgb(handles.b.pre.mask_imag+1,handles.b.pre.color_map_mask);
@@ -140,7 +140,8 @@ try
     handles.b.figures.frame=image(handles.b.pre.frame_rgb);
     a = 0.8;
     set(handles.b.figures.frame,'AlphaData',(handles.b.pre.frame>0).*a)
-    
+    set(handles.b.figures.image_axes,'XTickLabel',[])
+    set(handles.b.figures.image_axes,'YTickLabel',[])
     axes(handles.b.figures.para_axes)
     
     
